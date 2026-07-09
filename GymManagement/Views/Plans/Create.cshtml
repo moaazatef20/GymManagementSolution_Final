@@ -1,0 +1,114 @@
+﻿@model CreatePlanViewModel
+@{
+    ViewData["Title"] = "Create Plan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Success"] != null)
+{
+    <div id="Alert" class="alert alert-success alert-dismissible fade show shadow-sm">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+else if (TempData["Failed"] != null)
+{
+    <div id="Alert" class="alert alert-danger alert-dismissible fade show shadow-sm">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        @TempData["Failed"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="container mt-4">
+    <header class="mb-4">
+        <h3 class="text-primary-color">Create New Plan</h3>
+        <p class="text-muted">Add a new membership plan to your gym</p>
+    </header>
+
+    <form asp-action="Create" method="post">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4">
+
+                        <div class="section-header mb-3">
+                            <h5 class="text-primary fw-bold">Plan Information</h5>
+                            <hr class="mt-2">
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Name" class="form-label fw-semibold">
+                                    Plan Name <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Name" class="form-control" placeholder="e.g., VIP Monthly" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Price" class="form-label fw-semibold">
+                                    Price (EGP) <span class="text-danger">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0"><i class="bi bi-cash"></i></span>
+                                    <input asp-for="Price" type="number" step="0.01" class="form-control border-start-0" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-12">
+                                <label asp-for="DurationDays" class="form-label fw-semibold">
+                                    Duration (Days) <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="DurationDays" type="number" class="form-control" placeholder="e.g., 30" min="1" max="365" />
+                                <small class="text-muted">Number of days this plan remains valid (Max 365 days)</small>
+                                <span asp-validation-for="DurationDays" class="text-danger d-block mt-1"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Description" class="form-label fw-semibold">
+                                    Description <span class="text-danger">*</span>
+                                </label>
+                                <textarea asp-for="Description" class="form-control" rows="3"
+                                          placeholder="Describe the plan benefits and what it includes..."></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="section-header mb-3">
+                            <h5 class="text-primary fw-bold">Plan Status</h5>
+                            <hr class="mt-2">
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="form-check form-switch form-switch-md">
+                                    <input asp-for="IsActive" class="form-check-input" type="checkbox" checked />
+                                    <label asp-for="IsActive" class="form-check-label fw-semibold ms-2">
+                                        Active (Available for new subscriptions)
+                                    </label>
+                                </div>
+                                <small class="text-muted d-block mt-1">If disabled, this plan will be hidden from the registration list.</small>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4 pt-4 border-top">
+                            <a asp-action="Index" class="btn btn-outline">
+                                <i class="bi bi-arrow-left me-1"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-fill">
+                                <i class="bi bi-check-lg me-1"></i>Create Plan
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

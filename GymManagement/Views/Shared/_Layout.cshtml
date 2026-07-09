@@ -1,0 +1,85 @@
+﻿@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    string NavActive(string controller) =>
+        currentController.Equals(controller, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
+    <!-- ^ Bootstrap 5.3.8 css file -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!-- ^ Our main css file -->
+    <link rel="stylesheet" href="~/css/style.css" />
+    <title>Power fitness | @ViewData["Title"]</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-white my-3">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.jpg" alt="Power Fitness" />
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav m-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
+                        <li class="nav-item @NavActive("Home")">
+                            <a class="nav-link @NavActive("Home") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Home" asp-action="Index" aria-current="@(NavActive("Home") == "active" ? "page" : null)">Home</a>
+                        </li>
+                        <li class="nav-item @NavActive("Members")">
+                            <a class="nav-link @NavActive("Members") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Members" asp-action="Index" aria-current="@(NavActive("Members") == "active" ? "page" : null)">Members</a>
+                        </li>
+                        @if(User.IsInRole("SuperAdmin"))
+                            {
+                            <li class="nav-item @NavActive("Trainers")">
+                                <a class="nav-link @NavActive("Trainers") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Trainers" asp-action="Index" aria-current="@(NavActive("Trainers") == "active" ? "page" : null)">Trainers</a>
+                            </li>
+                            }
+                            <li class="nav-item @NavActive("Sessions")">
+                            <a class="nav-link @NavActive("Sessions") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Sessions" asp-action="Index" aria-current="@(NavActive("Sessions") == "active" ? "page" : null)">Sessions</a>
+                        </li>
+                        <li class="nav-item @NavActive("Plans")">
+                            <a class="nav-link @NavActive("Plans") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Plans" asp-action="Index" aria-current="@(NavActive("Plans") == "active" ? "page" : null)">Plans</a>
+                        </li>
+                        <li class="nav-item @NavActive("Memberships")">
+                            <a class="nav-link @NavActive("Memberships") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="Memberships" asp-action="Index" aria-current="@(NavActive("Memberships") == "active" ? "page" : null)">Memberships</a>
+                        </li>
+                        <li class="nav-item @NavActive("SessionSchedules")">
+                            <a class="nav-link @NavActive("SessionSchedules") px-3 py-2 mx-2 fw-bolder fs-5" asp-controller="SessionSchedules" asp-action="Index" aria-current="@(NavActive("SessionSchedules") == "active" ? "page" : null)">Sessions Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-action="Logout" asp-controller="Account" method="post" class="d-inline">
+                                <button type="submit"
+                                        class="btn btn-link nav-link px-3 py-2 mx-2 fw-bolder fs-5 text-black-alternative">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="@(ViewData["FullWidth"] as bool? == true ? "" : "container")">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

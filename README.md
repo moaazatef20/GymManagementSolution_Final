@@ -4,7 +4,7 @@ A comprehensive, real-world Gym Management System built with **ASP.NET Core MVC 
 
 ## 🌟 Live Demo & Test Credentials
 
-You can test the live application here: **[Insert Your Domain Here - e.g., http://yourdomain.com]**
+You can test the live application here: **[https://powerfitness.ddns.net/]**
 
 To explore the system's full capabilities, please use the following seeded admin credentials on the **Login Page**:
 - **Email:** `moaazatef2020@gmail.com`
